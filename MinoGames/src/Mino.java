@@ -1,7 +1,7 @@
 
 public class Mino {
-	public String nom;
-	public int num;
-	
-
+	private boolean dispo;
+	private int coté;
+	private int orientation;
+	private int est_visible;
 }
