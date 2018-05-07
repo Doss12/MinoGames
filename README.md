@@ -12,5 +12,5 @@ COMPTE-RENDU :
 https://fr.sharelatex.com/8329943639rwqndkhpqpdg
 
 TUTORIEL LIBGDX :
-https://itch.io/jam/libgdxjam/topic/12039/apprentice-softs-devlog
+https://itch.io/jam/libgdxjam/topic/12039/apprentice-softs-devlog<br>
 https://github.com/DavidPeicho/libGDX-walk-through/blob/master/tutorial/english-version/chapter1-discover-libgdx/1-first-step.md
