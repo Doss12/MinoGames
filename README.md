@@ -10,3 +10,6 @@ https://www.youtube.com/watch?v=-zhOhrI8Ksw
 
 COMPTE-RENDU :
 https://fr.sharelatex.com/8329943639rwqndkhpqpdg
+
+TUTORIEL LIBGDX :
+https://itch.io/jam/libgdxjam/topic/12039/apprentice-softs-devlog
