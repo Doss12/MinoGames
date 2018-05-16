@@ -19,6 +19,8 @@ public class Main extends ApplicationAdapter {
         float actorX, actorY;
         public boolean started = false;
 
+		//TEST GITHUB
+		
         public MyActor(int X, int Y){
             setBounds(X,Y,texture.getWidth(),texture.getHeight());
             this.actorX = X;
