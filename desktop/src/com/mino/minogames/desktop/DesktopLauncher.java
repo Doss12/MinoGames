@@ -15,7 +15,7 @@ public class DesktopLauncher {
 		config.title = "MinoGames";
 		config.addIcon("icon.png", Files.FileType.Internal);
 
-		// new LwjglApplication(new Main(), config);
+		//new LwjglApplication(new Main(), config);
 		new LwjglApplication(new JeuDomino(), config);
 	}
 }
