@@ -15,9 +15,3 @@ TUTORIEL LIBGDX :
 https://itch.io/jam/libgdxjam/topic/12039/apprentice-softs-devlog<br>
 https://github.com/DavidPeicho/libGDX-walk-through/blob/master/tutorial/english-version/chapter1-discover-libgdx/1-first-step.md<br>
 http://www.gamefromscratch.com/page/LibGDX-Tutorial-series.aspx
-
-POUR IMPORTER UNE BRANCHE :
-- Telecharger toute la branche
-- Sur Eclipse, File > Import > Gradle > Existing Gradle Project
-- Puis dans "Project Root Directory", mettez le dossier que vous avez téléchargé
-- Finish
