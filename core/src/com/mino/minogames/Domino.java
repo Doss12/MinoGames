@@ -7,7 +7,6 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 
 public class Domino extends Mino {
-
 	Texture texture_cote1, texture_cote2;
     
     public Domino(int X, int Y, int cote1, int cote2){
@@ -37,6 +36,7 @@ public class Domino extends Mino {
     			texture_cote1 = new Texture(Gdx.files.internal("domino_0.png"));
     			break;
     	}
+    	
     	switch (cote2) {
 			case 0:
 				texture_cote2 = new Texture(Gdx.files.internal("domino_0.png"));
@@ -62,7 +62,7 @@ public class Domino extends Mino {
 			default:
 				texture_cote2 = new Texture(Gdx.files.internal("domino_0.png"));
 				break;
-	}
+    	}
     	
         setBounds(X,Y,texture_cote1.getWidth(),texture_cote1.getHeight());
         setBounds(X,Y,texture_cote2.getWidth(),texture_cote2.getHeight());
@@ -76,11 +76,9 @@ public class Domino extends Mino {
         });
     }
     
-    
     @Override
     public void draw(Batch batch, float alpha){
         batch.draw(texture_cote1,get_posX(),get_posY());
         batch.draw(texture_cote2,get_posX(),get_posY()+30);
     }
-   
 }

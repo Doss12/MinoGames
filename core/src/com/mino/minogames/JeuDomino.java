@@ -13,19 +13,28 @@ public class JeuDomino extends ApplicationAdapter {
 	SpriteBatch batch;
 	Stage stage_domino;
 	Domino[] main_joueur, main_ordinateur;
-	HUD hud;
-	Random aleatoire = new Random();
-	
+		
 	@Override
 	public void create () {
-		int alea1, alea2;
-		int X = 500;
 		batch = new SpriteBatch();
 		stage_domino = new Stage();
 		Gdx.input.setInputProcessor(stage_domino);
-        hud = new HUD(0, 0, 2);
+		
+        init_HUD();
+        distribution_domino();
+	}
+	
+	public void init_HUD() {
+		HUD hud = new HUD(0, 0, 2);
         stage_domino.addActor(hud);
-        
+	}
+	
+	public void distribution_domino() {
+		Random aleatoire = new Random();
+		
+		int alea1, alea2;
+		int X = 500;
+		
 		main_joueur = new Domino[7];
         for (int i=0 ; i<7 ; i++) {
         	alea1 = aleatoire.nextInt(6);
@@ -61,8 +70,7 @@ public class JeuDomino extends ApplicationAdapter {
 		batch.begin();
 		batch.end();
 	}
-	
-	
+		
 	@Override
 	public void dispose () {
 		batch.dispose();
@@ -79,5 +87,4 @@ public class JeuDomino extends ApplicationAdapter {
     @Override
     public void resume() {
     }
-
 }
