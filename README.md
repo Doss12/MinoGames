@@ -22,5 +22,4 @@ POUR IMPORTER UNE BRANCHE :
 - Puis dans "Project Root Directory", mettez le dossier que vous avez téléchargé
 - Finish
 
-TUTORIEL VIDEO POUR UTILISER GITHUB :
-https://www.youtube.com/watch?v=OmFiDjQ2KMA
+TUTORIEL VIDEO POUR UTILISER GITHUB : https://www.youtube.com/watch?v=OmFiDjQ2KMA
