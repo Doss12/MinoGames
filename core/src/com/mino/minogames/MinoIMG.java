@@ -5,6 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 public class MinoIMG extends Actor{
 	protected Mino M;
 	private int posX, posY;
+	private int ancienX, ancienY;
 	private boolean est_libre;
 	
 	protected boolean action_en_cours = false;
@@ -43,4 +44,19 @@ public class MinoIMG extends Actor{
 		posY = Y;
 	}   
 
+	public int getAncienX() {
+		return ancienX;
+	}
+
+	public void setAncienX(int ancienX) {
+		this.ancienX = ancienX;
+	}
+
+	public int getAncienY() {
+		return ancienY;
+	}
+
+	public void setAncienY(int ancienY) {
+		this.ancienY = ancienY;
+	}
 }
