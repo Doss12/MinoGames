@@ -25,6 +25,9 @@ public class JeuMinoGUI extends ApplicationAdapter {
 		stage = new Stage();
 		camera = new OrthographicCamera();
 		
+		this.test_compatibilité_mino_2cote();
+		this.test_compatibilité_mino_3cote();
+		
 		Gdx.input.setInputProcessor(stage);
 		mino_joueur = new ArrayList<ArrayList<MinoIMG>>();
 		for(int i = 0; i < game.get_nbJoueur(); i++)
@@ -89,5 +92,55 @@ public class JeuMinoGUI extends ApplicationAdapter {
 
     @Override
     public void resume() {
+    }
+    
+    private void test_compatibilité_mino_2cote()
+    {
+    	Mino m1 = new Mino(2);
+		m1.set_cote(0,3);
+		m1.set_cote(1,1);
+		m1.set_dispo(0, null);
+		m1.set_dispo(1, null);
+		Mino m2 = new Mino(2);
+		m2.set_cote(0,1);
+		m2.set_cote(1,3);
+		m2.set_dispo(0, null);
+		m2.set_dispo(1, null);
+		
+		if(m1.compare(m2)== true)
+		{
+			System.out.println("COMPATIBLES\n");
+		}
+		else
+		{
+			System.out.println("PAS COMPATIBLES\n");
+		}
+    }
+    
+    private void test_compatibilité_mino_3cote()
+    {
+    	Mino m1 = new Mino(3);
+		m1.set_cote(0,3);
+		m1.set_cote(1,5);
+		m1.set_cote(2,4);
+		m1.set_dispo(0, null);
+		m1.set_dispo(1, null);
+		m1.set_dispo(2, null);
+		Mino m2 = new Mino(3);
+		m2.set_cote(0,5);
+		m2.set_cote(1,3);
+		m2.set_cote(2,4);
+		m2.set_dispo(0, null);
+		m2.set_dispo(1, null);
+		m2.set_dispo(2, null);
+		
+		if(m1.compare(m2)== true)
+		{
+			System.out.println("COMPATIBLES\n");
+		}
+		else
+		{
+			System.out.println("PAS COMPATIBLES\n");
+		}
     }
 }
