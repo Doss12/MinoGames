@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 public class DominoIMG extends MinoIMG {
 	Texture texture_cote1, texture_cote2;
@@ -71,10 +72,9 @@ public class DominoIMG extends MinoIMG {
         //setBounds(X,Y,texture_cote2.getWidth(),texture_cote2.getHeight());
         this.set_posX(X);
         this.set_posY(Y);
-        addListener(new InputListener(){
-            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+        addListener(new ClickListener(){
+        	            public void clicked(InputEvent event, float x, float y)  {
             	((DominoIMG)event.getTarget()).action_en_cours = true;
-                return true;
             }
         });
     }
