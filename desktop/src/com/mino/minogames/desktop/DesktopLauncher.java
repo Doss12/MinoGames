@@ -4,7 +4,7 @@ import com.badlogic.gdx.Files;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 // import com.mino.minogames.Main;
-import com.mino.minogames.JeuDomino;
+import com.mino.minogames.JeuMinoGUI;
 
 public class DesktopLauncher {
 	public static void main (String[] arg) {
@@ -14,8 +14,7 @@ public class DesktopLauncher {
 		config.height = 720;
 		config.title = "MinoGames";
 		config.addIcon("icon.png", Files.FileType.Internal);
-
 		// new LwjglApplication(new Main(), config);
-		new LwjglApplication(new JeuDomino(), config);
+		new LwjglApplication(new JeuMinoGUI(), config);
 	}
 }
