@@ -19,7 +19,7 @@ public class JeuMinoGUI extends ApplicationAdapter {
 		
 	@Override
 	public void create () {
-		game = new JeuMino(2,4);
+		game = new JeuMino(3,4);
 		
 		batch = new SpriteBatch();
 		stage = new Stage();
@@ -32,8 +32,6 @@ public class JeuMinoGUI extends ApplicationAdapter {
 		plateau = new ArrayList<MinoIMG>();
         init_HUD();
         affiche_joueur();
-        //distribution_domino();
-
 	}
 	
 	public void init_HUD() {
@@ -41,8 +39,14 @@ public class JeuMinoGUI extends ApplicationAdapter {
         stage.addActor(hud);
 	}
 	
-	public void affiche_joueur()
-	{
+	public void affiche_joueur() {
+		if (game.get_nbCote() == 2)
+			affiche_joueur_domino();
+		else if (game.get_nbCote() == 3)
+			affiche_joueur_triomino();
+	}
+	
+	public void affiche_joueur_domino() {
 		int X = 450;	int Y = 10;
 		ArrayList<Mino> list_mino;
 		for(int i = 0; i < game.get_nbJoueur(); i++){
@@ -55,6 +59,25 @@ public class JeuMinoGUI extends ApplicationAdapter {
 				if(i == 2) {Y-=50; X = 10;}
 				if(i == 3) {Y-=50; X = 1210;}
 				mino_joueur.get(i).add(new DominoIMG(list_mino.get(j),X,Y));
+				mino_joueur.get(i).get(j).setTouchable(Touchable.enabled);
+				stage.addActor(mino_joueur.get(i).get(j));
+			}
+		}
+	}
+	
+	public void affiche_joueur_triomino() {
+		int X = 400;	int Y = 10;
+		ArrayList<Mino> list_mino;
+		for(int i = 0; i < game.get_nbJoueur(); i++){
+			list_mino = game.get_list_Joueur().get(i).get_main();
+			if(i < 2) {X = 400;}
+			else {Y = 500;}
+			for (int j=0 ; j<list_mino.size(); j++) {
+				if(i == 0) {X+=65; Y = 10;}
+				if(i == 1) {X+=65; Y = 650;}
+				if(i == 2) {Y-=65; X = 10;}
+				if(i == 3) {Y-=65; X = 1210;}
+				mino_joueur.get(i).add(new TriominoIMG(list_mino.get(j),X,Y));
 				mino_joueur.get(i).get(j).setTouchable(Touchable.enabled);
 				stage.addActor(mino_joueur.get(i).get(j));
 			}

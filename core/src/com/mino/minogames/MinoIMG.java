@@ -1,7 +1,5 @@
 package com.mino.minogames;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
 public class MinoIMG extends Actor{
@@ -43,22 +41,6 @@ public class MinoIMG extends Actor{
 	
 	public void set_posY(int Y) {
 		posY = Y;
-	}
-	
-    @Override
-    public void act(float delta){
-        if(action_en_cours){
-        	//this.addAction(Actions.moveTo(640, 360, 10));
-            //posX=Gdx.input.getX() - 15;
-            //posY=Gdx.graphics.getHeight() - Gdx.input.getY() - 30;
-        	posX=((Gdx.input.getX()-15)*1280)/Gdx.graphics.getWidth();
-        	posY=((Gdx.graphics.getHeight() - Gdx.input.getY() - 30)*720)/Gdx.graphics.getHeight();
-            this.setPosition(posX, posY);
-            if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
-            	action_en_cours = false;
-            }
-        }
-    }
-    
+	}   
 
 }
