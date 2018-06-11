@@ -6,7 +6,7 @@ public class Mino {
 	
 	private int nb_cote;
 	private int[] cote;
-	private boolean[] dispo;
+	private Mino[] dispo;
 	private orientation ori;
 	private boolean est_visible;
 	
@@ -14,9 +14,9 @@ public class Mino {
 	{
 		this.nb_cote = nb_cote;
 		cote = new int[nb_cote];
-		dispo = new boolean[nb_cote];
+		dispo = new Mino[nb_cote];
 		for(int i = 0; i < nb_cote; i++)
-			dispo[i] = true;
+			dispo[i] = null;
 		ori = orientation.VERTICALE;
 		est_visible = true;
 	}
@@ -37,7 +37,7 @@ public class Mino {
 		return 0;
 	}
 	
-	public boolean get_dispo(int id_dispo)
+	public Mino get_dispo(int id_dispo)
 	{
 		try {
 			return dispo[id_dispo];
@@ -45,7 +45,7 @@ public class Mino {
 		catch(ArrayIndexOutOfBoundsException e) {
 			e.printStackTrace();
 		}
-		return false;
+		return dispo[id_dispo];
 	}
 	
 	public orientation get_orientation()
@@ -63,9 +63,9 @@ public class Mino {
 		cote[id_cote] = val;
 	}
 	
-	public void set_dispo(int id_dispo, boolean val)
+	public void set_dispo(int id_dispo, Mino m)
 	{
-		dispo[id_dispo] = val;
+		dispo[id_dispo] = m;
 	}
 	
 	public void set_orientation(orientation val)
@@ -84,5 +84,56 @@ public class Mino {
 		for(int i = 0; i < nb_cote; i++)
 			System.out.printf(cote[i] + ",");
 		System.out.print(")\n");
+	}
+	
+	//fonction qui prend un mino m en paramètre, et vérifie que l'on peut poser m à côté de notre mino
+	public boolean compare(Mino m)
+	{
+		boolean is_compatible = false;
+		
+		for(int i=0;i<this.nb_cote;i++)
+		{
+			if(this.dispo[i]==null)
+			{
+				for(int j=0;j<m.nb_cote;j++)
+				{
+					if(dispo[j]==null)
+					{
+						//si on traite un domino
+						if(this.nb_cote == 2)
+						{
+							if(this.cote[i]==m.cote[j])
+							{
+								System.out.println("COTE COMPATIBLES : " + this.cote[i] +  " & " + m.cote[j]);
+								return true;
+							}
+						}
+						//si on traite un triomino
+						else
+						{
+							if(this.dispo[i] == m.dispo[j])
+							{
+								if((this.cote[i] == m.cote[(j+1)%3]) && (this.cote[(i+1)%3] == m.cote[j]))
+								{
+									System.out.println("COTE COMPATIBLES : " + this.cote[i]+ "," + this.cote[(i+1)%3] +  " & "
+												+  m.cote[(j+1)%3] + "," + m.cote[j]);
+									return true;
+								}
+							}
+						}
+					}
+					else
+					{
+						System.out.println("PLUS DE PLACE SUR " + j);
+					}
+				}
+			}
+			else
+			{
+				System.out.println("PLUS DE PLACE SUR " + i);
+			}	
+		}
+		
+		return is_compatible;
 	}
 }
