@@ -1,66 +1,88 @@
 package com.mino.minogames;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.scenes.scene2d.Actor;
+enum orientation {VERTICALE, HORIZONTALE;}
 
-public class Mino extends Actor {
-	private int cote1, cote2, posX, posY;
-	private boolean est_libre;
+public class Mino {
 	
-	public boolean action_en_cours = false;
+	private int nb_cote;
+	private int[] cote;
+	private boolean[] dispo;
+	private orientation ori;
+	private boolean est_visible;
 	
-	public Mino() {
-		cote1 = 0;
-		cote2 = 0;
-		est_libre = true;
+	public Mino(int nb_cote)
+	{
+		this.nb_cote = nb_cote;
+		cote = new int[nb_cote];
+		dispo = new boolean[nb_cote];
+		for(int i = 0; i < nb_cote; i++)
+			dispo[i] = true;
+		ori = orientation.VERTICALE;
+		est_visible = true;
 	}
 	
-	public int get_cote1() {
-		return cote1;
+	public int get_nbcote()
+	{
+		return nb_cote;
 	}
 	
-	public int get_cote2() {
-		return cote2;
+	public int get_cote(int id_cote)
+	{
+		try {
+			return cote[id_cote];
+		}
+		catch(ArrayIndexOutOfBoundsException e) {
+			e.printStackTrace();
+		}
+		return 0;
 	}
 	
-	public boolean est_libre() {
-		return est_libre;
+	public boolean get_dispo(int id_dispo)
+	{
+		try {
+			return dispo[id_dispo];
+		}
+		catch(ArrayIndexOutOfBoundsException e) {
+			e.printStackTrace();
+		}
+		return false;
 	}
 	
-	public float get_posX() {
-		return posX;
+	public orientation get_orientation()
+	{
+		return ori;
 	}
 	
-	public float get_posY() {
-		return posY;
+	public boolean get_visible()
+	{
+		return est_visible;
 	}
 	
-	public void set_posX(int X) {
-		posX = X;
+	public void set_cote(int id_cote, int val)
+	{
+		cote[id_cote] = val;
 	}
 	
-	public void set_posY(int Y) {
-		posY = Y;
+	public void set_dispo(int id_dispo, boolean val)
+	{
+		dispo[id_dispo] = val;
 	}
 	
-	public void set_cote1(int val) {
-		cote1 = val;
+	public void set_orientation(orientation val)
+	{
+		ori = val;
 	}
 	
-	public void set_cote2(int val) {
-		cote2 = val;
+	public void set_visible(boolean val)
+	{
+		est_visible = val;
 	}
 	
-    @Override
-    public void act(float delta){
-        if(action_en_cours){
-            posX=Gdx.input.getX() - 15;
-            posY=Gdx.graphics.getHeight() - Gdx.input.getY() - 30;
-
-            if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
-            	action_en_cours = false;
-            }
-        }
-    }
+	public void affiche()
+	{
+		System.out.printf("(");
+		for(int i = 0; i < nb_cote; i++)
+			System.out.printf(cote[i] + ",");
+		System.out.print(")\n");
+	}
 }
