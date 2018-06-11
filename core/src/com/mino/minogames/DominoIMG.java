@@ -13,6 +13,8 @@ public class DominoIMG extends MinoIMG {
     	this.M = M;
         this.set_posX(X);
         this.set_posY(Y);
+        this.setAncienX(X);
+        this.setAncienY(Y);
         
     	switch (M.get_cote(0)) {
     		case 0:
@@ -72,12 +74,13 @@ public class DominoIMG extends MinoIMG {
     		setBounds(X,Y,texture_cote1.getWidth(),texture_cote1.getHeight()*2);
     	else
     		setBounds(X,Y,texture_cote1.getWidth()*2,texture_cote1.getHeight());
-
+    	
         addListener(new ClickListener(){
         	public void clicked(InputEvent event, float x, float y)  {
         		((DominoIMG)event.getTarget()).action_en_cours = true;
         	}
         });
+
     }
     
     @Override
@@ -105,14 +108,20 @@ public class DominoIMG extends MinoIMG {
         	}
         	this.setPosition(super.get_posX(), super.get_posY());
         	
-        	addListener(new ClickListener(){
-            	public void clicked(InputEvent event, float x, float y)  {
-            		if (Gdx.input.getY()>110 && Gdx.input.getY()<610 && Gdx.input.getX()>250 && Gdx.input.getX()<830) {
-                		((DominoIMG)event.getTarget()).action_en_cours = false;
-                	}
-                	
-                };
-});
+			addListener(new ClickListener() {
+
+				public void clicked(InputEvent event, float x, float y) {
+					if (Gdx.input.getY() > 110 && Gdx.input.getY() < 610 && Gdx.input.getX() > 250
+							&& Gdx.input.getX() < 830) {
+						action_en_cours = false;
+					}
+					else {
+						set_posX(getAncienX());
+						set_posY(getAncienY());
+						action_en_cours = false;
+					}
+				};
+			});
         }
 	}
 }
