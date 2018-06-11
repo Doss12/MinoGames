@@ -2,13 +2,16 @@ package com.mino.minogames;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 
 public class TriominoIMG extends MinoIMG {
-	Texture texture;
+	private Texture texture;
+	private BitmapFont font;
     
     public TriominoIMG(Mino M, int X, int Y){
     	this.M = M;
@@ -17,7 +20,8 @@ public class TriominoIMG extends MinoIMG {
         
         texture = new Texture(Gdx.files.internal("triomino_0.png"));
         setBounds(X,Y,texture.getWidth(),texture.getHeight());
-        
+        font = new BitmapFont();
+        font.setColor(Color.BLACK);
         
         addListener(new InputListener(){
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
@@ -29,7 +33,10 @@ public class TriominoIMG extends MinoIMG {
     
     @Override
     public void draw(Batch batch, float alpha){
-    	batch.draw(texture,get_posX(),get_posY());
+    	batch.draw(texture, get_posX(), get_posY());
+    	font.draw(batch, String.valueOf(M.get_cote(0)), get_posX() + 26, get_posY() + 53);
+    	font.draw(batch, String.valueOf(M.get_cote(1)), get_posX() + 45, get_posY() + 14);
+    	font.draw(batch, String.valueOf(M.get_cote(2)), get_posX() + 7, get_posY() + 14);
     }
     
 	@Override

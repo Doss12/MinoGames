@@ -7,12 +7,13 @@ public class JeuMino {
 	private int nb_cote, nb_joueur;
 	private ArrayList<Joueur> list_Joueur;
 	private ArrayList<Mino> pioche;
+	private ArrayList<Mino> plateau;
 	
 	public JeuMino(int nb_cote, int nb_joueur)
 	{
 		this.nb_cote = nb_cote;
 		this.nb_joueur = nb_joueur;
-		pioche = get_all_mino();
+		pioche = get_pioche();
 		//Initialisation des joueurs et de leurs minos
 		list_Joueur = new ArrayList<Joueur>();
 		int nb_piece_par_joueur = get_nbpiece_distrib();
@@ -32,7 +33,7 @@ public class JeuMino {
 			list_Joueur.get(i).affiche();
 	}
 	
-	public ArrayList<Mino> get_all_mino()
+	public ArrayList<Mino> get_pioche()
 	{
 		ArrayList<Mino> pioche = new ArrayList<Mino>();
 		if(nb_cote == 2)
@@ -83,11 +84,6 @@ public class JeuMino {
 	public ArrayList<Joueur> get_list_Joueur()
 	{
 		return list_Joueur;
-	}
-	
-	public ArrayList<Mino> get_pioche()
-	{
-		return pioche;
 	}
 	
 	public int get_nbCote()

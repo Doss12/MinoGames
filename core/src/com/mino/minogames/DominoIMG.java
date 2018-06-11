@@ -1,14 +1,13 @@
 package com.mino.minogames;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 public class DominoIMG extends MinoIMG {
-	Texture texture_cote1, texture_cote2;
+	private Texture texture_cote1, texture_cote2;
     
     public DominoIMG(Mino M, int X, int Y){
     	this.M = M;
@@ -74,11 +73,10 @@ public class DominoIMG extends MinoIMG {
     	else
     		setBounds(X,Y,texture_cote1.getWidth()*2,texture_cote1.getHeight());
 
-        addListener(new InputListener(){
-            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-            	((DominoIMG)event.getTarget()).action_en_cours = true;
-                return true;
-            }
+        addListener(new ClickListener(){
+        	public void clicked(InputEvent event, float x, float y)  {
+        		((DominoIMG)event.getTarget()).action_en_cours = true;
+        	}
         });
     }
     
@@ -106,9 +104,15 @@ public class DominoIMG extends MinoIMG {
         		super.set_posY(((Gdx.graphics.getHeight() - Gdx.input.getY() - 15)*720)/Gdx.graphics.getHeight());
         	}
         	this.setPosition(super.get_posX(), super.get_posY());
-        	if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
-        		action_en_cours = false;
-        	}
+        	
+        	addListener(new ClickListener(){
+            	public void clicked(InputEvent event, float x, float y)  {
+            		if (Gdx.input.getY()>110 && Gdx.input.getY()<610 && Gdx.input.getX()>250 && Gdx.input.getX()<830) {
+                		((DominoIMG)event.getTarget()).action_en_cours = false;
+                	}
+                	
+                };
+});
         }
 	}
 }

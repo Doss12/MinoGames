@@ -14,28 +14,39 @@ public class JeuMinoGUI extends ApplicationAdapter {
 	private OrthographicCamera camera;
 	private Stage stage;
 	private JeuMino game;
-	ArrayList<ArrayList<MinoIMG>> mino_joueur;
+	private ArrayList<ArrayList<MinoIMG>> mino_joueur;
 	private ArrayList<MinoIMG> plateau;
 		
 	@Override
 	public void create () {
-		game = new JeuMino(3,4);
-		
+		game = new JeuMino(2,4);
 		batch = new SpriteBatch();
 		stage = new Stage();
 		camera = new OrthographicCamera();
-		
 		Gdx.input.setInputProcessor(stage);
-		mino_joueur = new ArrayList<ArrayList<MinoIMG>>();
-		for(int i = 0; i < game.get_nbJoueur(); i++)
-			mino_joueur.add(new ArrayList<MinoIMG>());
-		plateau = new ArrayList<MinoIMG>();
+		
+		init_texture_mino();
+		/*************************************************************************
+		*********************************** TEST ********************************/
+		game.get_list_Joueur().get(0).set_pseudo("Glenn Rhee");
+		game.get_list_Joueur().get(1).set_pseudo("Maggie Rhee");
+		game.get_list_Joueur().get(2).set_pseudo("Rick Grimes");
+		game.get_list_Joueur().get(3).set_pseudo("Daryl Dixon");
+		/*************************************************************************
+		*************************************************************************/
         init_HUD();
         affiche_joueur();
 	}
 	
+	public void init_texture_mino() {
+		mino_joueur = new ArrayList<ArrayList<MinoIMG>>();
+		for(int i = 0; i < game.get_nbJoueur(); i++)
+			mino_joueur.add(new ArrayList<MinoIMG>());
+		plateau = new ArrayList<MinoIMG>();
+	}
+	
 	public void init_HUD() {
-		HUD hud = new HUD(0, 0, game.get_list_Joueur().size());
+		HUD hud = new HUD(0, 0, game.get_list_Joueur());
         stage.addActor(hud);
 	}
 	
