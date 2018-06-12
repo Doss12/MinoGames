@@ -43,8 +43,18 @@ public class JeuMinoGUI extends ApplicationAdapter {
 		game.get_list_Joueur().get(3).set_pseudo("Daryl Dixon");
 		/*************************************************************************
 		*************************************************************************/
+		//Mino M = game.pose_mino_max();
+		init_premier_mino();
         init_HUD();
         affiche_joueur();
+	}
+	
+	public void init_premier_mino()
+	{
+		//Mino M = game.pose_mino_max();
+		MinoIMG M = new DominoIMG(game.pose_mino_max(), 640, 360);
+		plateau.add(M);
+		stage.addActor(M);
 	}
 	
 	public void init_texture_mino() {
@@ -134,9 +144,9 @@ public class JeuMinoGUI extends ApplicationAdapter {
 			}
 		}
 
-		System.out.println("lol");
+		/*System.out.println("lol");
 		for(int i = 0; i < plateau.size(); i++)
-        	plateau.get(i).get_mino().affiche();
+        	plateau.get(i).get_mino().affiche();*/
 	}
 
 	@Override
@@ -170,7 +180,7 @@ public class JeuMinoGUI extends ApplicationAdapter {
 	public void resume() {
 	}
 	
-	private void test_compatibilité_mino_2cote()
+	public void test_compatibilité_mino_2cote()
     {
     	Mino m1 = new Mino(2);
 		m1.set_cote(0,3);
@@ -190,7 +200,7 @@ public class JeuMinoGUI extends ApplicationAdapter {
 		}
     }
     
-    private void test_compatibilité_mino_3cote()
+	public void test_compatibilité_mino_3cote()
     {
     	Mino m1 = new Mino(3);
 		m1.set_cote(0,3);
@@ -211,7 +221,7 @@ public class JeuMinoGUI extends ApplicationAdapter {
 		}
     }
     
-    private void test_association_Minos_2cote()
+	public void test_association_Minos_2cote()
     {
     	Mino m1 = new Mino(2);
 		m1.set_cote(0,3);
@@ -236,7 +246,7 @@ public class JeuMinoGUI extends ApplicationAdapter {
     	
     }
     
-    private void test_association_Minos_3cote()
+	public void test_association_Minos_3cote()
     {
     	Mino m1 = new Mino(3);
 	m1.set_cote(0,5);

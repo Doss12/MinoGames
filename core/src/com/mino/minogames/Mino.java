@@ -61,6 +61,7 @@ public class Mino {
 	{
 		cote[id_cote] = val;
 	}
+	
         
 	public void associer_mino(Mino m,int indice_dispo_this,int indice_dispo_m)
 	{
@@ -82,13 +83,21 @@ public class Mino {
 	{
 		est_visible = val;
 	}
-        
+    
+	public int somme_cote()
+	{
+		int res = 0;
+		for(int i = 0; i < nb_cote; i++)
+			res += cote[i];
+		return res;
+	}
+	
 	public void affiche()
 	{
 		System.out.printf("(");
 		for(int i = 0; i < nb_cote; i++)
 			System.out.printf(cote[i] + ",");
-	System.out.print(")\n");
+		System.out.print(")\n");
 	}
 	        
 	//fonction qui prend un mino m en paramètre, et vérifie que l'on peut poser m à côté de notre mino
