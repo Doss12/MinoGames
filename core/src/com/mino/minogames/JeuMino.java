@@ -87,6 +87,35 @@ public class JeuMino {
 		return nb_joueur;
 	}
 	
+	public Mino premier_Mino() {
+		int i = 0;
+		Mino plusGrand = list_Joueur.get(i).get_mino_max();
+		for (i = 1; i < list_Joueur.size(); i++) {
+			if (list_Joueur.get(i).get_mino_max().somme_cote() > plusGrand.somme_cote())
+				plusGrand = list_Joueur.get(i).get_mino_max();
+			}
+		return plusGrand;
+	}
+	
+	
+	
+	public Mino pose_mino_max()
+	{
+		Mino m = premier_Mino();
+		for(int i = 0; i < list_Joueur.size(); i++)
+		{
+			if(list_Joueur.get(i).get_main().contains(m))
+			{
+				list_Joueur.get(i).jouer(m);
+				//plateau.add(m);
+				return m;
+			}
+		}
+		/*for(int i = 0; i < list_Joueur.size(); i++)
+			list_Joueur.get(i).affiche();*/
+		return null;
+	}
+	
 	public void add_mino_plateau(Mino M) {
 		plateau.add(M);
 	}

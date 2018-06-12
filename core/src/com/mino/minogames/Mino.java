@@ -82,6 +82,15 @@ public class Mino {
 	{
 		est_visible = val;
 	}
+	
+	public int somme_cote()
+	{
+		int res = 0;
+		for(int i = 0; i < nb_cote; i++)
+			res += cote[i];
+		
+		return res;
+	}
         
 	public void affiche()
 	{

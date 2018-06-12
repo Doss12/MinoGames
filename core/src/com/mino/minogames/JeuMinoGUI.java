@@ -29,9 +29,6 @@ public class JeuMinoGUI extends ApplicationAdapter {
 	private boolean premier_halo_gauche_ou_pas = true;
 	private boolean premier_halo_droite_ou_pas = true;
 
-	Mino M;
-	DominoIMG test;
-
 	@Override
 	public void create () {
 		nb_cote = 2;
@@ -51,9 +48,17 @@ public class JeuMinoGUI extends ApplicationAdapter {
 		game.get_list_Joueur().get(3).set_pseudo("Daryl Dixon");
 		/*************************************************************************
 		*************************************************************************/
+		init_premier_mino();
         init_HUD();
         affiche_joueur();
-        init_premier_joueur();
+	}
+	
+	public void init_premier_mino()
+	{
+		MinoIMG M = new DominoIMG(game.pose_mino_max(), 640, 360);
+		M.get_mino().set_orientation(orientation.HORIZONTALE);
+		plateau.add(M);
+		stage.addActor(M);
 	}
 	
 	public void init_texture_mino() {
@@ -66,16 +71,6 @@ public class JeuMinoGUI extends ApplicationAdapter {
 	public void init_HUD() {
 		HUD hud = new HUD(0, 0, game.get_list_Joueur());
         stage.addActor(hud);
-	}
-	
-	public void init_premier_joueur() {
-		M = new Mino(2);
-		M.set_cote(0, 3);
-		M.set_cote(1, 5);
-		M.set_orientation(orientation.HORIZONTALE);
-		test = new DominoIMG(M, 600, 400);
-		stage.addActor(test);
-		plateau.add(test);
 	}
 	
 	public void affiche_joueur() {
@@ -91,12 +86,12 @@ public class JeuMinoGUI extends ApplicationAdapter {
 		cote_dispo = Main.tester_tous_cotes(Plateau);
 		
 		if (cote_dispo[0] != -1) {
-			halo_gauche = new HaloIMG(test, 0);
+			halo_gauche = new HaloIMG(plateau.get(0), 0);
 			stage.addActor(halo_gauche);
 			premier_halo_gauche_ou_pas = false;
 		}
 		if (cote_dispo[1] != -1) {
-			halo_droite = new HaloIMG(test, 1);
+			halo_droite = new HaloIMG(plateau.get(0), 1);
 			stage.addActor(halo_droite);
 			premier_halo_droite_ou_pas = false;
 		}
@@ -126,7 +121,7 @@ public class JeuMinoGUI extends ApplicationAdapter {
                 		if (premier_halo_droite_ou_pas == false)
                 			halo_droite.addAction(Actions.removeActor());
                 		
-                		affiche_halo(mino_joueur.get(id_i).get(id_j).get_mino(), M);
+                		affiche_halo(mino_joueur.get(id_i).get(id_j).get_mino(), plateau.get(0).get_mino());
                 	}
                 });
 				stage.addActor(mino_joueur.get(i).get(j));
@@ -277,52 +272,50 @@ public class JeuMinoGUI extends ApplicationAdapter {
 		{
 			System.out.println(i + " : " + cotes_dispo[i]);
 		}
-    	
     }
     
     private void test_association_Minos_3cote()
     {
     	Mino m1 = new Mino(3);
-	m1.set_cote(0,5);
-	m1.set_cote(1,0);
-	m1.set_cote(2,4);
+    	m1.set_cote(0,5);
+    	m1.set_cote(1,0);
+    	m1.set_cote(2,4);
 	
-	Mino m2 = new Mino(3);
-	m2.set_cote(0,5);
-	m2.set_cote(1,3);
-	m2.set_cote(2,0);
+    	Mino m2 = new Mino(3);
+    	m2.set_cote(0,5);
+    	m2.set_cote(1,3);
+    	m2.set_cote(2,0);
 	
-	int[] cotes_dispo = new int[3];
+    	int[] cotes_dispo = new int[3];
 	
-	for(int i =0;i<3;i++)
-	{
-		System.out.println(m2.get_Mino_dispo(i));
-	}
-	cotes_dispo = m1.tester_tous_cotes(m2);
-	for(int i= 0;i<3;i++)
-	{
-		if(cotes_dispo[i]!=-1)
-		{
-			m1.associer_mino(m2, cotes_dispo[i], i);
-		}
-	}
+    	for(int i =0;i<3;i++)
+    	{
+    		System.out.println(m2.get_Mino_dispo(i));
+    	}
+    	cotes_dispo = m1.tester_tous_cotes(m2);
+    	for(int i= 0;i<3;i++)
+    	{
+    		if(cotes_dispo[i]!=-1)
+    		{
+    			m1.associer_mino(m2, cotes_dispo[i], i);
+    		}
+    	}
 	
-	for(int i =0;i<3;i++)
-	{
-		System.out.println(i + " : " + cotes_dispo[i]);
-	}
+    	for(int i =0;i<3;i++)
+    	{
+    		System.out.println(i + " : " + cotes_dispo[i]);
+    	}
 	
-	for(int i =0;i<3;i++)
-	{
-		if(m1.get_Mino_dispo(i)!= null)
-			System.out.println("M1 DISPO " + i + " OCCUPIED");
-		else
-			System.out.println("M2 DISPO " + i + " FREE");
-		if(m2.get_Mino_dispo(i)!= null)
-			System.out.println("M2 DISPO " + i + " OCCUPIED");
-		else
-			System.out.println("M2 DISPO " + i + " FREE");
-	}
-    	
+    	for(int i =0;i<3;i++)
+    	{
+    		if(m1.get_Mino_dispo(i)!= null)
+    			System.out.println("M1 DISPO " + i + " OCCUPIED");
+    		else
+    			System.out.println("M2 DISPO " + i + " FREE");
+    		if(m2.get_Mino_dispo(i)!= null)
+    			System.out.println("M2 DISPO " + i + " OCCUPIED");
+    		else
+    			System.out.println("M2 DISPO " + i + " FREE");
+    	}
     }
 }
