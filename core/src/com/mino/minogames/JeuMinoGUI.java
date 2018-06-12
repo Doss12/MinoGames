@@ -119,7 +119,7 @@ public class JeuMinoGUI extends ApplicationAdapter {
         return plateau;
 	}
 	
-	// Met � jour les minos dans la liste Plateau
+	// Met à jour les minos dans la liste Plateau
 	public void update_mino() {
 		plateau = get_plateau_distinct();
 		for (int i=0 ; i<nb_joueur ; i++) {
@@ -157,18 +157,130 @@ public class JeuMinoGUI extends ApplicationAdapter {
 		batch.dispose();
 	}
 	
-    @Override
-    public void resize(int width, int height) {
+    	@Override
+    	public void resize(int width, int height) {
     	camera.setToOrtho(false, width, height);
         camera.update();
     	stage.getViewport().setScreenSize(width, height);
-    }
+    	}
 
-    @Override
-    public void pause() {
-    }
+    	@Override
+    	public void pause() {
+    	}
 
-    @Override
-    public void resume() {
+    	@Override
+    	public void resume() {
+    	}
+	
+	private void test_compatibilité_mino_2cote()
+    {
+    	Mino m1 = new Mino(2);
+		m1.set_cote(0,3);
+		m1.set_cote(1,1);
+		
+		Mino m2 = new Mino(2);
+		m2.set_cote(0,1);
+		m2.set_cote(1,3);
+		
+		if(m1.compare(m2)== true)
+		{
+			System.out.println("COMPATIBLES\n");
+		}
+		else
+		{
+			System.out.println("PAS COMPATIBLES\n");
+		}
+    }
+    
+    private void test_compatibilité_mino_3cote()
+    {
+    	Mino m1 = new Mino(3);
+		m1.set_cote(0,3);
+		m1.set_cote(1,5);
+		m1.set_cote(2,4);
+		Mino m2 = new Mino(3);
+		m2.set_cote(0,5);
+		m2.set_cote(1,3);
+		m2.set_cote(2,4);
+		
+		if(m1.compare(m2)== true)
+		{
+			System.out.println("COMPATIBLES\n");
+		}
+		else
+		{
+			System.out.println("PAS COMPATIBLES\n");
+		}
+    }
+    
+    private void test_association_Minos_2cote()
+    {
+    	Mino m1 = new Mino(2);
+		m1.set_cote(0,3);
+		m1.set_cote(1,1);
+		
+		Mino m2 = new Mino(2);
+		m2.set_cote(0,5);
+		m2.set_cote(1,4);
+		
+		int[] cotes_dispo = new int[2];
+		
+		for(int i =0;i<2;i++)
+		{
+			System.out.println(m2.get_Mino_dispo(i));
+		}
+		
+		cotes_dispo = m1.tester_tous_cotes(m2);
+		for(int i =0;i<2;i++)
+		{
+			System.out.println(i + " : " + cotes_dispo[i]);
+		}
+    	
+    }
+    
+    private void test_association_Minos_3cote()
+    {
+    	Mino m1 = new Mino(3);
+	m1.set_cote(0,5);
+	m1.set_cote(1,0);
+	m1.set_cote(2,4);
+	
+	Mino m2 = new Mino(3);
+	m2.set_cote(0,5);
+	m2.set_cote(1,3);
+	m2.set_cote(2,0);
+	
+	int[] cotes_dispo = new int[3];
+	
+	for(int i =0;i<3;i++)
+	{
+		System.out.println(m2.get_Mino_dispo(i));
+	}
+	cotes_dispo = m1.tester_tous_cotes(m2);
+	for(int i= 0;i<3;i++)
+	{
+		if(cotes_dispo[i]!=-1)
+		{
+			m1.associer_mino(m2, cotes_dispo[i], i);
+		}
+	}
+	
+	for(int i =0;i<3;i++)
+	{
+		System.out.println(i + " : " + cotes_dispo[i]);
+	}
+	
+	for(int i =0;i<3;i++)
+	{
+		if(m1.get_Mino_dispo(i)!= null)
+			System.out.println("M1 DISPO " + i + " OCCUPIED");
+		else
+			System.out.println("M2 DISPO " + i + " FREE");
+		if(m2.get_Mino_dispo(i)!= null)
+			System.out.println("M2 DISPO " + i + " OCCUPIED");
+		else
+			System.out.println("M2 DISPO " + i + " FREE");
+	}
+    	
     }
 }
