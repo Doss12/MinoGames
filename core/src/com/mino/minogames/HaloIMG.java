@@ -31,10 +31,18 @@ public class HaloIMG extends Actor {
     		Y = M.get_posY();
     	}
     }
-    
+       
     @Override
     public void draw(Batch batch, float alpha){
     	batch.draw(texture,X,Y);
+    }
+    
+    public int get_posX() {
+    	return X;
+    }
+    
+    public int get_posY() {
+    	return Y;
     }
 
 }

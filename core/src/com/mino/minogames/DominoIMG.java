@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 public class DominoIMG extends MinoIMG {
 	private Texture texture_cote1, texture_cote2;
+	private HaloIMG halo_cote1, halo_cote2;
     
     public DominoIMG(Mino M, int X, int Y){
     	this.M = M;
@@ -80,7 +81,6 @@ public class DominoIMG extends MinoIMG {
         		((DominoIMG)event.getTarget()).action_en_cours = true;
         	}
         });
-
     }
     
     @Override
@@ -88,6 +88,7 @@ public class DominoIMG extends MinoIMG {
     	if(M.get_orientation() == orientation.VERTICALE) {
 	        batch.draw(texture_cote1,get_posX(),get_posY());
 	        batch.draw(texture_cote2,get_posX(),get_posY()+30);
+	        
     	}
     	else {
     		batch.draw(texture_cote1,get_posX(),get_posY());
@@ -109,7 +110,7 @@ public class DominoIMG extends MinoIMG {
         	this.setPosition(super.get_posX(), super.get_posY());
         	
 			addListener(new ClickListener() {
-
+				
 				public void clicked(InputEvent event, float x, float y) {
 					if (Gdx.input.getY() > 110 && Gdx.input.getY() < 610 && Gdx.input.getX() > 250
 							&& Gdx.input.getX() < 830) {

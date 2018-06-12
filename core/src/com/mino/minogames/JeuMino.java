@@ -97,8 +97,6 @@ public class JeuMino {
 		return plusGrand;
 	}
 	
-	
-	
 	public Mino pose_mino_max()
 	{
 		Mino m = premier_Mino();
