@@ -119,7 +119,7 @@ public class JeuMinoGUI extends ApplicationAdapter {
         return plateau;
 	}
 	
-	// Met Ã  jour les minos dans la liste Plateau
+	// Met à jour les minos dans la liste Plateau
 	public void update_mino() {
 		plateau = get_plateau_distinct();
 		for (int i=0 ; i<nb_joueur ; i++) {
@@ -138,8 +138,6 @@ public class JeuMinoGUI extends ApplicationAdapter {
 		for(int i = 0; i < plateau.size(); i++)
         	plateau.get(i).get_mino().affiche();
 	}
-	
-
 
 	@Override
 	public void render () {
@@ -157,22 +155,22 @@ public class JeuMinoGUI extends ApplicationAdapter {
 		batch.dispose();
 	}
 	
-    	@Override
-    	public void resize(int width, int height) {
+    @Override
+    public void resize(int width, int height) {
     	camera.setToOrtho(false, width, height);
-        camera.update();
+    	camera.update();
     	stage.getViewport().setScreenSize(width, height);
-    	}
+	}
 
-    	@Override
-    	public void pause() {
-    	}
+	@Override
+	public void pause() {
+	}
 
-    	@Override
-    	public void resume() {
-    	}
+	@Override
+	public void resume() {
+	}
 	
-	private void test_compatibilitÃ©_mino_2cote()
+	private void test_compatibilité_mino_2cote()
     {
     	Mino m1 = new Mino(2);
 		m1.set_cote(0,3);
@@ -192,7 +190,7 @@ public class JeuMinoGUI extends ApplicationAdapter {
 		}
     }
     
-    private void test_compatibilitÃ©_mino_3cote()
+    private void test_compatibilité_mino_3cote()
     {
     	Mino m1 = new Mino(3);
 		m1.set_cote(0,3);
