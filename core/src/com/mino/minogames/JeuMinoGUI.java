@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 public class JeuMinoGUI extends ApplicationAdapter {
@@ -23,12 +24,19 @@ public class JeuMinoGUI extends ApplicationAdapter {
 	private int nb_joueur;
 	private ArrayList<ArrayList<MinoIMG>> mino_joueur;
 	private ArrayList<MinoIMG> plateau;
-		
+	private HaloIMG halo_gauche;
+	private HaloIMG halo_droite;
+	private boolean premier_halo_gauche_ou_pas = true;
+	private boolean premier_halo_droite_ou_pas = true;
+
+	Mino M;
+	DominoIMG test;
+
 	@Override
 	public void create () {
 		nb_cote = 2;
 		nb_joueur = 4;
-		game = new JeuMino(nb_cote,nb_joueur);
+		game = new JeuMino(nb_cote, nb_joueur);
 		batch = new SpriteBatch();
 		stage = new Stage();
 		camera = new OrthographicCamera();
@@ -45,6 +53,7 @@ public class JeuMinoGUI extends ApplicationAdapter {
 		*************************************************************************/
         init_HUD();
         affiche_joueur();
+        init_premier_joueur();
 	}
 	
 	public void init_texture_mino() {
@@ -59,11 +68,38 @@ public class JeuMinoGUI extends ApplicationAdapter {
         stage.addActor(hud);
 	}
 	
+	public void init_premier_joueur() {
+		M = new Mino(2);
+		M.set_cote(0, 3);
+		M.set_cote(1, 5);
+		M.set_orientation(orientation.HORIZONTALE);
+		test = new DominoIMG(M, 600, 400);
+		stage.addActor(test);
+		plateau.add(test);
+	}
+	
 	public void affiche_joueur() {
 		if (game.get_nbCote() == 2)
 			affiche_joueur_domino();
 		else if (game.get_nbCote() == 3)
 			affiche_joueur_triomino();
+	}
+	
+	public void affiche_halo(Mino Main, Mino Plateau) {
+		int[] cote_dispo = new int[2];
+
+		cote_dispo = Main.tester_tous_cotes(Plateau);
+		
+		if (cote_dispo[0] != -1) {
+			halo_gauche = new HaloIMG(test, 0);
+			stage.addActor(halo_gauche);
+			premier_halo_gauche_ou_pas = false;
+		}
+		if (cote_dispo[1] != -1) {
+			halo_droite = new HaloIMG(test, 1);
+			stage.addActor(halo_droite);
+			premier_halo_droite_ou_pas = false;
+		}
 	}
 	
 	public void affiche_joueur_domino() {
@@ -84,6 +120,13 @@ public class JeuMinoGUI extends ApplicationAdapter {
                 mino_joueur.get(i).get(j).addListener(new ClickListener() {
                 	public void clicked(InputEvent event, float x, float y)  {
                 		plateau.add(mino_joueur.get(id_i).get(id_j));
+                		
+                		if (premier_halo_gauche_ou_pas == false)
+                			halo_gauche.addAction(Actions.removeActor());
+                		if (premier_halo_droite_ou_pas == false)
+                			halo_droite.addAction(Actions.removeActor());
+                		
+                		affiche_halo(mino_joueur.get(id_i).get(id_j).get_mino(), M);
                 	}
                 });
 				stage.addActor(mino_joueur.get(i).get(j));
@@ -133,10 +176,11 @@ public class JeuMinoGUI extends ApplicationAdapter {
 				}
 			}
 		}
-
+		/*
 		System.out.println("lol");
 		for(int i = 0; i < plateau.size(); i++)
         	plateau.get(i).get_mino().affiche();
+        */
 	}
 
 	@Override

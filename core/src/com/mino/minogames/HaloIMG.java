@@ -10,7 +10,7 @@ public class HaloIMG extends Actor {
 	private int X;
 	private int Y;
     
-    public HaloIMG(MinoIMG M){
+    public HaloIMG(MinoIMG M, int cote_dispo){	
     	switch (M.get_mino().get_nbcote()) {
     		case 2:
     			texture = new Texture(Gdx.files.internal("halo_2.png"));
@@ -22,8 +22,14 @@ public class HaloIMG extends Actor {
     			break;
     	}
     	
-    	X = M.get_posX() + 60;
-    	Y = M.get_posY();
+    	if (cote_dispo == 0) { // halo à gauche
+    		X = M.get_posX() - 60;
+    		Y = M.get_posY();
+    	}
+    	else { // halo à droite
+    		X = M.get_posX() + 60;
+    		Y = M.get_posY();
+    	}
     }
     
     @Override

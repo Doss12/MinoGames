@@ -118,6 +118,10 @@ public class DominoIMG extends MinoIMG {
 					else {
 						set_posX(getAncienX());
 						set_posY(getAncienY());
+				    	if(M.get_orientation() == orientation.VERTICALE)
+				    		setBounds(getAncienX(),getAncienY(),texture_cote1.getWidth(),texture_cote1.getHeight()*2);
+				    	else
+				    		setBounds(getAncienX(),getAncienY(),texture_cote1.getWidth()*2,texture_cote1.getHeight());
 						action_en_cours = false;
 					}
 				};
