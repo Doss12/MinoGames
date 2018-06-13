@@ -155,11 +155,11 @@ public class JeuMinoGUI extends ApplicationAdapter {
 	
 	public ArrayList<MinoIMG> get_plateau_distinct(){
 		Set<MinoIMG> hs = new HashSet<MinoIMG>();
-        hs.addAll(plateau);
-        plateau.clear();
-        plateau.addAll(hs);
-        
-        return plateau;
+		hs.addAll(plateau);
+		plateau.clear();
+		plateau.addAll(hs);
+
+		return plateau;
 	}
 	
 	// Met à jour les minos dans la liste Plateau
