@@ -162,7 +162,7 @@ public class JeuMinoGUI extends ApplicationAdapter {
         return plateau;
 	}
 	
-	// Met à jour les minos dans la liste Plateau
+	// Met Ã  jour les minos dans la liste Plateau
 	public void update_mino() {
 		plateau = get_plateau_distinct();
 		for (int i=0 ; i<nb_joueur ; i++) {
@@ -188,7 +188,7 @@ public class JeuMinoGUI extends ApplicationAdapter {
 		Gdx.gl.glClearColor(60/255f, 68/255f, 79/255f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		stage.act(Gdx.graphics.getDeltaTime());
-	    stage.draw();
+	    	stage.draw();
 		batch.begin();
 		batch.end();
 		update_mino();
@@ -214,7 +214,7 @@ public class JeuMinoGUI extends ApplicationAdapter {
 	public void resume() {
 	}
 	
-	private void test_compatibilité_mino_2cote()
+	private void test_compatibilitÃ©_mino_2cote()
     {
     	Mino m1 = new Mino(2);
 		m1.set_cote(0,3);
@@ -234,7 +234,7 @@ public class JeuMinoGUI extends ApplicationAdapter {
 		}
     }
     
-    private void test_compatibilité_mino_3cote()
+    private void test_compatibilitÃ©_mino_3cote()
     {
     	Mino m1 = new Mino(3);
 		m1.set_cote(0,3);
