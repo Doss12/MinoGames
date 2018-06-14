@@ -114,7 +114,6 @@ public class JeuMino {
 		return null;
 	}
 	
-	
 	public void add_mino_plateau(Mino M) {
 		plateau.add(M);
 	}

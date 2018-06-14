@@ -15,6 +15,7 @@ public class Joueur {
 		this.id = id;
 		this.pseudo = "";
 		this.est_IA = false;
+		this.score = 0;
 		main = new ArrayList<Mino>();
 	}
 	

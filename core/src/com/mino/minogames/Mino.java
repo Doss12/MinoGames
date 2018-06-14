@@ -62,12 +62,41 @@ public class Mino {
 		cote[id_cote] = val;
 	}
 	
-        
-	public void associer_mino(Mino m,int indice_dispo_this,int indice_dispo_m)
+	public boolean doit_inverse_droite_domino(Mino plateau)
+	{
+		boolean res = false;
+		if(this.cote[0] == plateau.cote[1])
+			res = false;
+		else
+			res = true;
+		
+		return res;
+	}
+	
+	public boolean doit_inverse_gauche_domino(Mino plateau)
+	{
+		boolean res = false;
+		if(this.cote[1] == plateau.cote[0])
+			res = false;
+		else
+			res = true;
+		
+		return res;
+	}
+	
+	public boolean associer_mino(Mino m, int indice_dispo_this, int indice_dispo_m)
 	{
 		this.set_Mino_dispo(indice_dispo_this,m);
 		m.set_Mino_dispo(indice_dispo_m,this);
+		if(indice_dispo_this == indice_dispo_m)
+		{
+			this.inverser_domino();
+			return true;
+		}
+		return false;
 	}
+	
+	
         
 	public void set_Mino_dispo(int id_dispo, Mino M)
 	{
@@ -83,15 +112,16 @@ public class Mino {
 	{
 		est_visible = val;
 	}
-    
+	
 	public int somme_cote()
 	{
 		int res = 0;
 		for(int i = 0; i < nb_cote; i++)
 			res += cote[i];
+		
 		return res;
 	}
-	
+        
 	public void affiche()
 	{
 		System.out.printf("(");
@@ -100,7 +130,7 @@ public class Mino {
 		System.out.print(")\n");
 	}
 	        
-	//fonction qui prend un mino m en paramètre, et vérifie que l'on peut poser m à côté de notre mino
+	//fonction qui prend un mino m en paramÃ¨tre, et vÃ©rifie que l'on peut poser m Ã  cÃ´tÃ© de notre mino
 	public boolean compare(Mino m)
 	{
 		boolean is_compatible = false;
@@ -147,7 +177,7 @@ public class Mino {
 		return is_compatible;
 	}
                 
-	//Utilisée dans tester_tous_cotes: prend un mino m en paramètre et un numero de dispo, renvoie -1 si pas de disponibilité, renvoie i si dispo[i] de this est compatible
+	//UtilisÃ©e dans tester_tous_cotes: prend un mino m en paramÃ¨tre et un numero de dispo, renvoie -1 si pas de disponibilitÃ©, renvoie i si dispo[i] de this est compatible
 	public int tester_un_cote(Mino m,int num_dispo)
 	{
 		for(int i=0;i<nb_cote;i++)
@@ -169,7 +199,7 @@ public class Mino {
 		return -1;
 	}
                 
-	//Test la compatibilité de tous les cotés d'un mino m
+	//Test la compatibilitÃ© de tous les cotÃ©s d'un mino m
 	//Renvoie un tableau de int[nb_cote] cotes_compaibles, tel que cotes_compatibles[i] = -1 si m.dispo[i] n'a aucune dispo
 	//Sinon, cotes_compatibles[i] = j si m.dispo[i] et this.dispo[j] sont "collables" ensembles 
 	//Dans tous les cas, si cotes_compatibles[i] >= 0, on peut mettre une "aura" devant
@@ -187,14 +217,24 @@ public class Mino {
 			{
 				if(m.dispo[i] == null)
 				{
-					System.out.println("Cote " + i + " du deuxième mino est libre");
+					System.out.println("Cote " + i + " du deuxiÃ¨me mino est libre");
 					cotes_compatibles[i] = tester_un_cote(m,i);
 				}
 				else
-					System.out.println("Cote " + i + " du deuxième mino n'est pas libre");
+					System.out.println("Cote " + i + " du deuxiÃ¨me mino n'est pas libre");
 			}
 		}
                 
 		return cotes_compatibles;
+	}
+	public void inverser_domino()
+	{
+		int temp = this.cote[0];
+		this.cote[0] = this.cote[1];
+		this.cote[1] = temp;
+		
+		Mino Mino_temp = this.dispo[0];
+		this.dispo[0] = this.dispo[1];
+		this.dispo[1] = Mino_temp;
 	}
 }

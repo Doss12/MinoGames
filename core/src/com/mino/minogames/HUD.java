@@ -40,6 +40,7 @@ public class HUD extends Actor {
     }
     
     
+    
     @Override
     public void draw(Batch batch, float alpha){
         batch.draw(texture, posX, posY);
