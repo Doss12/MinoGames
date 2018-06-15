@@ -1,5 +1,7 @@
 package com.mino.minogames;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -8,15 +10,53 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 public class DominoIMG extends MinoIMG {
 	private Texture texture_cote1, texture_cote2;
-	private HaloIMG halo_cote1, halo_cote2;
-    
-    public DominoIMG(Mino M, int X, int Y){
+	private boolean est_inverse = false;
+   
+
+	public DominoIMG(Mino M, int X, int Y){
     	this.M = M;
         this.set_posX(X);
         this.set_posY(Y);
         this.setAncienX(X);
         this.setAncienY(Y);
         
+        update_texture();
+    	
+    	if(M.get_orientation() == orientation.VERTICALE)
+    		setBounds(X,Y,texture_cote1.getWidth(),texture_cote1.getHeight()*2);
+    	else
+    		setBounds(X,Y,texture_cote1.getWidth()*2,texture_cote1.getHeight());
+    	
+    	list_halo = new ArrayList<HaloIMG>();
+		int nb_cote = M.get_nbcote();
+		for(int i = 0; i < nb_cote; i++)
+			list_halo.add(new HaloIMG(nb_cote,i,M.get_orientation()));
+		
+		deplacer(X,Y);
+
+    	//SI ON CLIC EN DEHORS DUN HALO
+    	clic_vide = new ClickListener() {
+			public void clicked(InputEvent event, float x, float y) {
+				if(est_select() == true && MinoIMG.est_libre == false){
+					set_libre(true);
+				    set_select(false);
+				    deplacer(getAncienX(),getAncienY());
+				}
+			}
+		};
+    	this.addListener(clic_vide);
+    }
+    
+	public boolean est_inverse(){
+			return est_inverse;
+	}
+
+	public void set_inverse(boolean est_inverse) {
+		this.est_inverse = est_inverse;
+	}
+	
+    public void update_texture()
+    {
     	switch (M.get_cote(0)) {
     		case 0:
     			texture_cote1 = new Texture(Gdx.files.internal("domino_0.png"));
@@ -70,17 +110,56 @@ public class DominoIMG extends MinoIMG {
 				texture_cote2 = new Texture(Gdx.files.internal("domino_0.png"));
 				break;
     	}
-    	
+    }
+    
+    public void inverser_cote()
+    {
+    	if(est_inverse == false)
+    	{
+	    	Texture tmp = texture_cote2;
+	    	texture_cote1 = texture_cote2;
+	    	texture_cote2 = tmp;
+	    	M.inverser_domino();
+	    	update_texture();
+	    	est_inverse = true;
+    	}
+    }
+    
+    public void deplacer(int x, int y)
+    {
+    	super.deplacer(x, y);
+    	this.set_posX(x);
+		this.set_posY(y);
     	if(M.get_orientation() == orientation.VERTICALE)
-    		setBounds(X,Y,texture_cote1.getWidth(),texture_cote1.getHeight()*2);
+    	{
+        	this.list_halo.get(0).set_posX(x);
+        	this.list_halo.get(0).set_posY(y-60);
+        	this.list_halo.get(1).set_posX(x);
+        	this.list_halo.get(1).set_posY(y+60);
+    		setBounds(x,y,texture_cote1.getWidth(),texture_cote1.getHeight()*2);
+    		int halo_x = this.list_halo.get(0).get_posX();
+        	int halo_y = this.list_halo.get(0).get_posY();
+        	this.list_halo.get(0).setBounds(halo_x, halo_y, texture_cote1.getWidth(), texture_cote1.getHeight()*2);
+        	halo_x = this.list_halo.get(1).get_posX();
+        	halo_y = this.list_halo.get(1).get_posY();
+        	this.list_halo.get(1).setBounds(halo_x, halo_y, texture_cote1.getWidth(), texture_cote1.getHeight()*2);
+    	}
     	else
-    		setBounds(X,Y,texture_cote1.getWidth()*2,texture_cote1.getHeight());
-    	
-        addListener(new ClickListener(){
-        	public void clicked(InputEvent event, float x, float y)  {
-        		((DominoIMG)event.getTarget()).action_en_cours = true;
-        	}
-        });
+    	{
+        	this.list_halo.get(0).set_posX(x - 60);
+        	this.list_halo.get(0).set_posY(y);
+        	this.list_halo.get(1).set_posX(x + 60);
+        	this.list_halo.get(1).set_posY(y);
+    		setBounds(x,y,texture_cote1.getWidth()*2,texture_cote1.getHeight());
+    		int halo_x = this.list_halo.get(0).get_posX();
+        	int halo_y = this.list_halo.get(0).get_posY();
+        	this.list_halo.get(0).setBounds(halo_x, halo_y, texture_cote1.getWidth()*2, texture_cote1.getHeight());
+        	halo_x = this.list_halo.get(1).get_posX();
+        	halo_y = this.list_halo.get(1).get_posY();
+        	this.list_halo.get(1).setBounds(halo_x, halo_y, texture_cote1.getWidth()*2, texture_cote1.getHeight());
+    	}
+    	this.list_halo.get(0).update_halo();
+    	this.list_halo.get(1).update_halo();
     }
     
     @Override
@@ -88,7 +167,6 @@ public class DominoIMG extends MinoIMG {
     	if(M.get_orientation() == orientation.VERTICALE) {
 	        batch.draw(texture_cote1,get_posX(),get_posY());
 	        batch.draw(texture_cote2,get_posX(),get_posY()+30);
-	        
     	}
     	else {
     		batch.draw(texture_cote1,get_posX(),get_posY());
@@ -98,7 +176,7 @@ public class DominoIMG extends MinoIMG {
 
 	@Override
 	public void act(float delta){
-    	if(action_en_cours){
+		if(est_select()){
         	if(M.get_orientation() == orientation.VERTICALE) {
         		super.set_posX(((Gdx.input.getX() - 15)*1280)/Gdx.graphics.getWidth());
         		super.set_posY(((Gdx.graphics.getHeight() - Gdx.input.getY() - 30)*720)/Gdx.graphics.getHeight());
@@ -107,26 +185,7 @@ public class DominoIMG extends MinoIMG {
         		super.set_posX(((Gdx.input.getX() - 30)*1280)/Gdx.graphics.getWidth());
         		super.set_posY(((Gdx.graphics.getHeight() - Gdx.input.getY() - 15)*720)/Gdx.graphics.getHeight());
         	}
-        	this.setPosition(super.get_posX(), super.get_posY());
-        	
-			addListener(new ClickListener() {
-				
-				public void clicked(InputEvent event, float x, float y) {
-					if (Gdx.input.getY() > 110 && Gdx.input.getY() < 610 && Gdx.input.getX() > 250
-							&& Gdx.input.getX() < 830) {
-						action_en_cours = false;
-					}
-					else {
-						set_posX(getAncienX());
-						set_posY(getAncienY());
-				    	if(M.get_orientation() == orientation.VERTICALE)
-				    		setBounds(getAncienX(),getAncienY(),texture_cote1.getWidth(),texture_cote1.getHeight()*2);
-				    	else
-				    		setBounds(getAncienX(),getAncienY(),texture_cote1.getWidth()*2,texture_cote1.getHeight());
-						action_en_cours = false;
-					}
-				};
-			});
+        	deplacer(super.get_posX(), super.get_posY());
         }
 	}
 }

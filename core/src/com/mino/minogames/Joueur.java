@@ -2,9 +2,6 @@ package com.mino.minogames;
 
 import java.util.ArrayList;
 
-import com.badlogic.gdx.Input.Orientation;
-
-
 public class Joueur {
 	
 	private int id;
@@ -18,6 +15,7 @@ public class Joueur {
 		this.id = id;
 		this.pseudo = "";
 		this.est_IA = false;
+		this.score = 0;
 		main = new ArrayList<Mino>();
 	}
 	
@@ -69,8 +67,27 @@ public class Joueur {
 	public void piocher(Mino m)
 	{
 		if(id > 2)
-			m.set_orientation(Mino.orientation.HORIZONTALE);
+			m.set_orientation(orientation.HORIZONTALE);
 		main.add(m);
+	}
+	
+	public void jouer(Mino m)
+	{
+		main.remove(m);
+	}
+	
+	public Mino get_mino_max()
+	{
+		Mino res = new Mino(main.get(0).get_nbcote());
+		int max = 0;
+		for(int i = 0; i < main.size(); i++) {
+			if(max < main.get(i).somme_cote())
+			{
+				res = main.get(i);
+				max = main.get(i).somme_cote();
+			}
+		}
+		return res;	
 	}
 	
 	public void affiche()

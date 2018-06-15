@@ -8,39 +8,33 @@ public class JeuMino {
 	private ArrayList<Joueur> list_Joueur;
 	private ArrayList<Mino> pioche;
 	private ArrayList<Mino> plateau;
+
 	
-	public JeuMino(int nb_cote, int nb_joueur)
-	{
+	public JeuMino(int nb_cote, int nb_joueur) {
 		this.nb_cote = nb_cote;
 		this.nb_joueur = nb_joueur;
 		pioche = get_pioche();
 		//Initialisation des joueurs et de leurs minos
 		list_Joueur = new ArrayList<Joueur>();
 		int nb_piece_par_joueur = get_nbpiece_distrib();
-		for(int i = 0; i < nb_joueur; i++)
-		{
+		for(int i = 0 ; i < nb_joueur ; i++) {
 			list_Joueur.add(new Joueur(i+1));
 			
-			for(int j = 0; j < nb_piece_par_joueur; j++)
-			{
+			for(int j = 0; j < nb_piece_par_joueur; j++) {
 				int randomNum = ThreadLocalRandom.current().nextInt(0, pioche.size());
 				Mino m = pioche.get(randomNum);
 				list_Joueur.get(i).piocher(m);
 				pioche.remove(randomNum);
 			}
 		}
-		for(int i = 0; i < list_Joueur.size(); i++)
-			list_Joueur.get(i).affiche();
 	}
 	
-	public ArrayList<Mino> get_pioche()
-	{
+	public ArrayList<Mino> get_pioche() {
 		ArrayList<Mino> pioche = new ArrayList<Mino>();
-		if(nb_cote == 2)
-		{
+		if(nb_cote == 2) {
 			int k = 0;
-			for (int i = 0; i < 7; i++) {
-				for (int j = i; j < 7; j++) {
+			for (int i = 0 ; i < 7 ; i++) {
+				for (int j = i ; j < 7 ; j++) {
 					pioche.add(new Mino(nb_cote));
 					pioche.get(k).set_cote(0, i);
 					pioche.get(k).set_cote(1, j);
@@ -48,11 +42,10 @@ public class JeuMino {
 				}
 			}
 		}
-		else
-		{
+		else {
 			int x = 0;
-			for (int k = 0; k < 6; k++) {
-				for (int i = k; i < 6; i++) {
+			for (int k = 0 ; k < 6 ; k++) {
+				for (int i = k ; i < 6 ; i++) {
 					for (int j = i; j < 6; j++) {
 						pioche.add(new Mino(nb_cote));
 						pioche.get(x).set_cote(0, k);
@@ -69,30 +62,99 @@ public class JeuMino {
 	public int get_nbpiece_distrib()
 	{
 		int res = 0;
-		if(nb_cote == 2)
-		{
+		if(nb_cote == 2) {
 			if(nb_joueur == 2)
 				res = 7;
 			else
 				res = 5;
 		}
 		else
-			res = 7;
+		{
+			if(nb_joueur == 2)
+				res = 9;
+			else
+				res = 7;
+		}
+			
 		return res;
 	}
 	
-	public ArrayList<Joueur> get_list_Joueur()
+	public Joueur get_joueur_gagnant()
 	{
+		Joueur J = list_Joueur.get(0);
+		for(int i = 1; i < list_Joueur.size(); i++)
+		{
+			if(J.get_score() < list_Joueur.get(i).get_score())
+				J = list_Joueur.get(i);
+		}
+		
+		return J;
+	}
+	
+	public ArrayList<Joueur> get_list_Joueur() {
 		return list_Joueur;
 	}
 	
-	public int get_nbCote()
-	{
+	public int get_nbCote() {
 		return nb_cote;
 	}
 	
-	public int get_nbJoueur()
-	{
+	public int get_nbJoueur() {
 		return nb_joueur;
+	}
+	
+	public Mino joueur_piocher(int id_joueur)
+	{
+		int randomNum = ThreadLocalRandom.current().nextInt(0, pioche.size());
+		Mino m = pioche.get(randomNum);
+		list_Joueur.get(id_joueur).piocher(m);
+		pioche.remove(randomNum);
+		return m;
+	}
+	
+	
+	public Mino premier_Mino() {
+		int i = 0;
+		Mino plusGrand = list_Joueur.get(i).get_mino_max();
+		for (i = 1; i < list_Joueur.size(); i++) {
+			if (list_Joueur.get(i).get_mino_max().somme_cote() > plusGrand.somme_cote())
+				plusGrand = list_Joueur.get(i).get_mino_max();
+			}
+		return plusGrand;
+	}
+	
+	public int qui_commence()
+	{
+		int res = 0;
+		int taille_main = list_Joueur.get(0).get_main().size();
+		for(int i = 1; i < nb_joueur; i++)
+		{
+			if(taille_main > list_Joueur.get(i).get_main().size())
+			{
+				taille_main = list_Joueur.get(i).get_main().size();
+				res = i;
+				
+			}
+		}
+		return res;
+	}
+	
+	public Mino pose_mino_max()
+	{
+		Mino m = premier_Mino();
+		for(int i = 0; i < list_Joueur.size(); i++)
+		{
+			if(list_Joueur.get(i).get_main().contains(m))
+			{
+				list_Joueur.get(i).jouer(m);
+				//plateau.add(m);
+				return m;
+			}
+		}
+		return null;
+	}
+	
+	public void add_mino_plateau(Mino M) {
+		plateau.add(M);
 	}
 }
